@@ -13,6 +13,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon-180x180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
       html,
       body {
@@ -27,14 +30,14 @@
       let backgroundColor;
 
       if (theme === 'dark') {
-        backgroundColor = '#0d0d0d';
+        backgroundColor = 'hsl(222, 47%, 8%)';
       } else if (theme === 'light') {
-        backgroundColor = '#ffffff';
+        backgroundColor = '#f6f7fb';
       } else if (theme === 'system') {
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        backgroundColor = prefersDarkScheme ? '#0d0d0d' : '#ffffff';
+        backgroundColor = prefersDarkScheme ? 'hsl(222, 47%, 8%)' : '#f6f7fb';
       } else {
-        backgroundColor = '#ffffff';
+        backgroundColor = '#f6f7fb';
       }
 
       loadingContainerStyle.innerHTML = `

@@ -183,6 +183,25 @@ const ChatForm = memo(function ChatForm({
 
   const textValue = useWatch({ control: methods.control, name: 'text' });
 
+  const evolsPlaceholders = [
+    'Ask anything about your product — roadmap, strategy, features, customers…',
+    'Invoke expert skills with @mentions (browse Skills page to discover 80+ capabilities)',
+    'Get AI recommendations grounded in your product strategy and customer intelligence',
+  ];
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setPlaceholderIndex((i) => (i + 1) % evolsPlaceholders.length);
+        setIsAnimating(false);
+      }, 350);
+    }, 4000);
+    return () => clearInterval(cycle);
+  }, []);
+
   useEffect(() => {
     if (textAreaRef.current) {
       const style = window.getComputedStyle(textAreaRef.current);
@@ -215,7 +234,7 @@ const ChatForm = memo(function ChatForm({
   const baseClasses = useMemo(
     () =>
       cn(
-        'md:py-3.5 m-0 w-full resize-none py-[13px] placeholder-black/60 bg-transparent dark:placeholder-white/60 [&:has(textarea:focus)]:shadow-[0_2px_6px_rgba(0,0,0,.05)]',
+        'md:py-3.5 m-0 w-full resize-none py-[13px] placeholder-transparent bg-transparent [&:has(textarea:focus)]:shadow-[0_2px_6px_rgba(0,0,0,.05)]',
         isCollapsed ? 'max-h-[52px]' : 'max-h-[45vh] md:max-h-[55vh]',
         isMoreThanThreeRows ? 'pl-5' : 'px-5',
       ),
@@ -291,6 +310,20 @@ const ChatForm = memo(function ChatForm({
                       : undefined
                   }
                 >
+                    {!textValue && (
+                      <span
+                        aria-hidden="true"
+                        key={placeholderIndex}
+                        className="pointer-events-none absolute left-5 top-[13px] text-sm text-black/40 dark:text-white/40 md:top-[14px] overflow-hidden"
+                        style={{
+                          animation: isAnimating
+                            ? 'evols-placeholder-out 350ms ease-in forwards'
+                            : 'evols-placeholder-in 350ms ease-out forwards',
+                        }}
+                      >
+                        {evolsPlaceholders[placeholderIndex]}
+                      </span>
+                    )}
                   <TextareaAutosize
                     {...registerProps}
                     ref={(e) => {

@@ -9,6 +9,7 @@ import {
   useAgentsMap,
   useFileMap,
 } from '~/hooks';
+import { useEvolsAutoAuth } from '~/hooks/useEvolsAutoAuth';
 import store from '~/store';
 import {
   PromptGroupsProvider,
@@ -24,6 +25,9 @@ import { useHealthCheck } from '~/data-provider';
 import { Banner } from '~/components/Banners';
 
 export default function Root() {
+  // Silent auto-auth: exchange one-time token from Evols workbench iframe src
+  useEvolsAutoAuth();
+
   const [showTerms, setShowTerms] = useState(false);
   const [bannerHeight, setBannerHeight] = useState(0);
   const sidebarExpanded = useRecoilValue(store.sidebarExpanded);

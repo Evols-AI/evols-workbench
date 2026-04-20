@@ -96,7 +96,7 @@ const useSpeechToTextBrowser = (
       SpeechRecognition.stopListening();
     } else {
       SpeechRecognition.startListening({
-        language: languageSTT,
+        language: languageSTT || navigator.language || 'en-US',
         continuous: autoTranscribeAudio,
       });
     }

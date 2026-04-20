@@ -79,10 +79,6 @@ export default memo(function AudioRecorder({
     onTranscriptionComplete,
   );
 
-  if (!textAreaRef.current) {
-    return null;
-  }
-
   const handleStartRecording = async () => {
     existingTextRef.current = getValues('text') || '';
     startRecording();

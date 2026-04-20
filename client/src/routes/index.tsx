@@ -15,6 +15,7 @@ import { AuthContextProvider } from '~/hooks/AuthContext';
 import RouteErrorBoundary from './RouteErrorBoundary';
 import StartupLayout from './Layouts/Startup';
 import LoginLayout from './Layouts/Login';
+import SettingsPanelRoute from './SettingsPanelRoute';
 import dashboardRoutes from './Dashboard';
 import ShareRoute from './ShareRoute';
 import ChatRoute from './ChatRoute';
@@ -100,6 +101,10 @@ export const router = createBrowserRouter(
           ],
         },
         dashboardRoutes,
+        {
+          path: 'settings-panel/:tab',
+          element: <SettingsPanelRoute />,
+        },
         {
           path: '/',
           element: <Root />,

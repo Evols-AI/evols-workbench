@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Evols Workbench — UI overrides
+   Loaded after LibreChat's own styles in main.jsx.
+   Single file — easy to maintain across upstream pulls.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Hide LibreChat's chat header bar
+   The Evols nav sits above the iframe so LibreChat's own header is redundant.
+   Targets the exact className in client/src/components/Chat/Header.tsx.
+   If upstream changes the class, search for `absolute top-0 z-10` in
+   client/src/components/Chat/ and update the selector below.
+   -------------------------------------------------------------------------- */
+.via-presentation\/70 {
+  display: none !important;
+}
+
+/* Remove the top padding/spacing that accounts for the hidden header */
+.chat-wrapper,
+[class*='chat-container'],
+[class*='react-scroll-to-bottom'] > div:first-child {
+  padding-top: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Hide chat footer ("LibreChat v0.x — Every AI for Everyone.")
+   -------------------------------------------------------------------------- */
+[role="contentinfo"] {
+  display: none !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Design token overrides — match Evols visual identity
+   Source of truth: evols/frontend/src/styles/globals.css
+   Two palettes mirrored here:
+     Light — off-white blue-gray (#f6f7fb base)
+     Dark  — navy (hsl 222 47% base)
+   -------------------------------------------------------------------------- */
+
+/* ── Evols palette primitives (private to this file) ── */
+:root {
+  --evols-blue:        hsl(217, 91%, 60%);   /* primary accent */
+  --evols-blue-light:  hsl(217, 91%, 65%);
+  --evols-blue-dark:   hsl(217, 91%, 48%);
+
+  /* Light surfaces */
+  --evols-l-bg:        #f6f7fb;
+  --evols-l-card:      #ffffff;
+  --evols-l-hover:     #eef0f6;
+  --evols-l-active:    #e4e7f0;
+
+  /* Dark surfaces */
+  --evols-d-bg:        hsl(222, 47%, 8%);
+  --evols-d-subtle:    hsl(222, 47%, 11%);
+  --evols-d-card:      hsl(222, 47%, 14%);
+  --evols-d-elevated:  hsl(222, 40%, 17%);
+  --evols-d-hover:     hsl(222, 40%, 20%);
+  --evols-d-active:    hsl(222, 40%, 23%);
+  --evols-d-border:    hsl(222, 30%, 20%);
+}
+
+/* ── Light mode ── */
+:root {
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+
+  --presentation:             var(--evols-l-bg);
+  --brand-purple:             var(--evols-blue);
+  --surface-submit:           var(--evols-blue);
+  --surface-submit-hover:     var(--evols-blue-dark);
+  --surface-primary:          var(--evols-l-card);
+  --surface-primary-alt:      var(--evols-l-bg);
+  --surface-primary-contrast: var(--evols-l-hover);
+  --surface-secondary:        var(--evols-l-bg);
+  --surface-secondary-alt:    var(--evols-l-hover);
+  --surface-tertiary:         var(--evols-l-hover);
+  --surface-dialog:           var(--evols-l-card);
+  --surface-chat:             var(--evols-l-card);
+  --surface-hover:            var(--evols-l-hover);
+  --surface-hover-alt:        var(--evols-l-active);
+  --surface-active:           var(--evols-l-active);
+  --surface-active-alt:       #d8dcea;
+
+  /* Radix/shadcn primitives — match Evols light palette */
+  --background:               220 18% 98%;
+  --foreground:               220 20% 14%;
+  --primary:                  217 91% 60%;
+  --primary-foreground:       0 0% 100%;
+  --secondary:                220 14% 96%;
+  --secondary-foreground:     220 20% 14%;
+  --muted:                    220 14% 96%;
+  --muted-foreground:         220 9% 46%;
+  --accent:                   217 91% 60%;
+  --accent-foreground:        0 0% 100%;
+  --border:                   220 13% 91%;
+  --input:                    220 13% 91%;
+  --ring:                     217 91% 60%;
+  --switch-unchecked:         220 9% 70%;
+}
+
+/* ── Page background: must use !important because style.css hard-codes
+      rgba() values directly on body/html (not via CSS variables) ── */
+body, html {
+  background-color: var(--evols-l-bg) !important;
+}
+
+/* ── Dark mode ── */
+html.dark {
+  --brand-purple:             var(--evols-blue-light);
+  --presentation:             var(--evols-d-subtle);
+  --surface-submit:           var(--evols-blue);
+  --surface-submit-hover:     var(--evols-blue-dark);
+  --surface-primary:          var(--evols-d-bg);
+  --surface-primary-alt:      var(--evols-d-subtle);
+  --surface-primary-contrast: var(--evols-d-card);
+  --surface-secondary:        var(--evols-d-subtle);
+  --surface-secondary-alt:    hsl(222, 40%, 16%);
+  --surface-tertiary:         var(--evols-d-elevated);
+  --surface-dialog:           hsl(222, 47%, 13%);
+  --surface-chat:             hsl(222, 47%, 13%);
+  --surface-hover:            var(--evols-d-hover);
+  --surface-hover-alt:        hsl(222, 40%, 22%);
+  --surface-active:           var(--evols-d-active);
+  --surface-active-alt:       hsl(222, 40%, 26%);
+  --border-light:             var(--evols-d-border);
+  --border-medium:            hsl(222, 30%, 23%);
+  --border-medium-alt:        hsl(222, 30%, 26%);
+  --border-heavy:             hsl(222, 30%, 32%);
+
+  /* Radix/shadcn primitives — match Evols dark palette */
+  --background:               222 47% 11%;
+  --foreground:               210 40% 98%;
+  --primary:                  217 91% 60%;
+  --primary-foreground:       0 0% 100%;
+  --secondary:                217 32% 17%;
+  --secondary-foreground:     210 40% 98%;
+  --muted:                    217 32% 17%;
+  --muted-foreground:         215 20% 65%;
+  --accent:                   217 91% 60%;
+  --accent-foreground:        0 0% 100%;
+  --border:                   222 30% 20%;
+  --input:                    222 30% 20%;
+  --ring:                     217 91% 60%;
+  --switch-unchecked:         222 20% 35%;
+}
+
+html.dark body,
+html.dark,
+.dark body,
+.dark html {
+  background-color: var(--evols-d-bg) !important;
+}
+
+/* Extend dark primitive overrides to .dark class (LibreChat applies it to <html>) */
+.dark {
+  --background:               222 47% 11%;
+  --foreground:               210 40% 98%;
+  --primary:                  217 91% 60%;
+  --primary-foreground:       0 0% 100%;
+  --secondary:                217 32% 17%;
+  --secondary-foreground:     210 40% 98%;
+  --muted:                    217 32% 17%;
+  --muted-foreground:         215 20% 65%;
+  --accent:                   217 91% 60%;
+  --accent-foreground:        0 0% 100%;
+  --border:                   222 30% 20%;
+  --input:                    222 30% 20%;
+  --ring:                     217 91% 60%;
+  --switch-unchecked:         222 20% 35%;
+}
+
+/* ── Settings panel route (embedded iframe): match Evols card background ── */
+html.evols-panel body,
+html.evols-panel {
+  background-color: var(--evols-l-card) !important;
+}
+
+html.dark.evols-panel body,
+html.dark.evols-panel {
+  background-color: var(--evols-d-card) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Rotating placeholder slide-up animation
+   -------------------------------------------------------------------------- */
+@keyframes evols-placeholder-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes evols-placeholder-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+/* --------------------------------------------------------------------------
+   7. Hide LLM API key entry in settings — BYOK is managed in Evols Settings
+   -------------------------------------------------------------------------- */
+[data-testid='api-key-section'],
+[class*='api-key'],
+[id*='api-key'],
+[placeholder*='API key'],
+[placeholder*='api key'] {
+  display: none !important;
+}

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { SettingsViews, LocalStorageKeys } from 'librechat-data-provider';
+import { SettingsViews, LocalStorageKeys, SettingsTabValues } from 'librechat-data-provider';
 import { atomWithLocalStorage } from '~/store/utils';
 import type { TOptionSettings } from '~/common';
 
@@ -12,6 +12,10 @@ const staticAtoms = {
     default: SettingsViews.default,
   }),
   showPopover: atom<boolean>({ key: 'showPopover', default: false }),
+  evolsSettingsDialog: atom<{ open: boolean; tab: SettingsTabValues }>({
+    key: 'evolsSettingsDialog',
+    default: { open: false, tab: SettingsTabValues.CHAT },
+  }),
 };
 
 const localStorageAtoms = {

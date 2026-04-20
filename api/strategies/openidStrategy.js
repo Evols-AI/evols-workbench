@@ -805,6 +805,9 @@ async function setupOpenId() {
       undefined,
       {
         [client.customFetch]: customFetch,
+        ...(process.env.OPENID_ALLOW_HTTP === 'true' && {
+          execute: [client.allowInsecureRequests],
+        }),
       },
     );
 

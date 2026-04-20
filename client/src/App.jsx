@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { RecoilRoot } from 'recoil';
+import { lazy, Suspense, useEffect } from 'react';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import { DndProvider } from 'react-dnd';
 import { RouterProvider } from 'react-router-dom';
 import * as RadixToast from '@radix-ui/react-toast';
@@ -8,7 +8,28 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toast, ThemeProvider, ToastProvider } from '@librechat/client';
 import { QueryClient, QueryClientProvider, QueryCache } from '@tanstack/react-query';
 import { ScreenshotProvider, useApiErrorBoundary } from './hooks';
+import { useEvolsThemeSync } from './hooks/useEvolsThemeSync';
 import WakeLockManager from '~/components/System/WakeLockManager';
+import store from '~/store';
+
+const Settings = lazy(() => import('~/components/Nav/Settings'));
+
+function EvolsThemeSync() {
+  useEvolsThemeSync();
+  const [{ open, tab }, setEvolsSettings] = useRecoilState(store.evolsSettingsDialog);
+  if (!open) {
+    return null;
+  }
+  return (
+    <Suspense fallback={null}>
+      <Settings
+        open={open}
+        onOpenChange={(isOpen) => setEvolsSettings((prev) => ({ ...prev, open: isOpen }))}
+        initialTab={tab}
+      />
+    </Suspense>
+  );
+}
 import { getThemeFromEnv } from './utils/getThemeFromEnv';
 import { initializeFontSize } from '~/store/fontSize';
 import { LiveAnnouncer } from '~/a11y';
@@ -53,6 +74,7 @@ const App = () => {
             // This allows localStorage values to persist when no env theme is set
             {...(envTheme && { initialTheme: 'system', themeRGB: envTheme })}
           >
+            <EvolsThemeSync />
             {/* The ThemeProvider will automatically:
                 1. Apply dark/light mode classes
                 2. Apply custom theme colors if envTheme is provided

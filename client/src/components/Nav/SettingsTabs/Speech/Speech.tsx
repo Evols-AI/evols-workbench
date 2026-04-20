@@ -155,7 +155,7 @@ function Speech() {
       orientation="horizontal"
       value={advancedMode ? 'advanced' : 'simple'}
     >
-      <div className="sticky -top-1 z-50 mb-4 bg-white dark:bg-gray-700">
+      <div className="sticky -top-1 z-50 mb-4 bg-surface-primary">
         <Tabs.List className="flex justify-center bg-background">
           <Tabs.Trigger
             onClick={() => setAdvancedMode(false)}

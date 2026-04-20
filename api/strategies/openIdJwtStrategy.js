@@ -26,22 +26,35 @@ const { updateUser, findUser } = require('~/models');
  * This enables seamless migration for existing users when SharePoint integration is enabled.
  */
 const openIdJwtLogin = (openIdConfig) => {
-  let jwksRsaOptions = {
-    cache: isEnabled(process.env.OPENID_JWKS_URL_CACHE_ENABLED) || true,
-    cacheMaxAge: math(process.env.OPENID_JWKS_URL_CACHE_TIME, 60000),
-    jwksUri: openIdConfig.serverMetadata().jwks_uri,
-  };
+  const clientSecret = process.env.OPENID_CLIENT_SECRET;
+  const useHmac = !!clientSecret;
 
-  if (process.env.PROXY) {
-    jwksRsaOptions.requestAgent = new HttpsProxyAgent(process.env.PROXY);
-  }
-
-  return new JwtStrategy(
-    {
+  let strategyOptions;
+  if (useHmac) {
+    strategyOptions = {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: clientSecret,
+      algorithms: ['HS256'],
+      passReqToCallback: true,
+    };
+  } else {
+    let jwksRsaOptions = {
+      cache: isEnabled(process.env.OPENID_JWKS_URL_CACHE_ENABLED) || true,
+      cacheMaxAge: math(process.env.OPENID_JWKS_URL_CACHE_TIME, 60000),
+      jwksUri: openIdConfig.serverMetadata().jwks_uri,
+    };
+    if (process.env.PROXY) {
+      jwksRsaOptions.requestAgent = new HttpsProxyAgent(process.env.PROXY);
+    }
+    strategyOptions = {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKeyProvider: jwksRsa.passportJwtSecret(jwksRsaOptions),
       passReqToCallback: true,
-    },
+    };
+  }
+
+  return new JwtStrategy(
+    strategyOptions,
     /**
      * @param {import('@librechat/api').ServerRequest} req
      * @param {import('openid-client').IDToken} payload
