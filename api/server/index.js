@@ -32,6 +32,7 @@ const { jwtLogin, ldapLogin, passportLogin } = require('~/strategies');
 const { checkMigrations } = require('./services/start/migration');
 const initializeMCPs = require('./services/initializeMCPs');
 const configureSocialLogins = require('./socialLogins');
+const { getBasePath } = require('@librechat/api');
 const { getAppConfig } = require('./services/Config');
 const staticCache = require('./utils/staticCache');
 const optionalJwtAuth = require('./middleware/optionalJwtAuth');
@@ -126,6 +127,24 @@ const startServer = async () => {
   app.use(staticCache(appConfig.paths.dist));
   app.use(staticCache(appConfig.paths.fonts));
   app.use(staticCache(appConfig.paths.assets));
+
+  const basePath = getBasePath();
+  if (basePath) {
+    app.use(basePath, staticCache(appConfig.paths.dist));
+    app.use(basePath, staticCache(appConfig.paths.fonts));
+    app.use(basePath, staticCache(appConfig.paths.assets));
+  }
+
+  // Strip the base path prefix from /api/* and /oauth/* requests so all route
+  // handlers work without duplication (e.g. /workbench/app/api/auth → /api/auth).
+  if (basePath) {
+    app.use((req, _res, next) => {
+      if (req.url === basePath || req.url.startsWith(basePath + '/api/') || req.url.startsWith(basePath + '/oauth/')) {
+        req.url = req.url.slice(basePath.length) || '/';
+      }
+      next();
+    });
+  }
 
   if (!ALLOW_SOCIAL_LOGIN) {
     console.warn('Social logins are disabled. Set ALLOW_SOCIAL_LOGIN=true to enable them.');

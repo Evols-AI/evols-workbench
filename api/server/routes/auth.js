@@ -73,4 +73,67 @@ router.post('/2fa/backup/regenerate', middleware.requireJwtAuth, regenerateBacku
 
 router.get('/graph-token', middleware.requireJwtAuth, graphTokenController);
 
+/**
+ * GET /api/auth/evols-ott
+ * Server-side OTT exchange — called by the Evols workbench page iframe src.
+ * Exchanges the one-time token with the Evols backend, finds/creates the
+ * LibreChat user, sets auth cookies, and redirects to the app root.
+ * This bypasses passport OIDC so no state/PKCE session is required.
+ */
+router.get('/evols-ott', middleware.loginLimiter, async (req, res) => {
+  const { logger } = require('@librechat/data-schemas');
+  const axios = require('axios');
+  const { findUser, createUser } = require('~/models');
+  const { setAuthTokens } = require('~/server/services/AuthService');
+  const { getBasePath } = require('@librechat/api');
+
+  const ott = req.query.ott;
+  if (!ott) {
+    return res.status(400).json({ error: 'ott required' });
+  }
+
+  try {
+    // Exchange OTT with Evols backend (server-to-server, no user token needed)
+    const backendUrl = process.env.EVOLS_BACKEND_URL || 'https://evols-backend-kdqer5oyua-uc.a.run.app';
+    const exchangeRes = await axios.post(
+      `${backendUrl}/api/v1/oidc/exchange-one-time-token`,
+      { token: ott },
+      { timeout: 10000 },
+    );
+    const { user: evolsUser } = exchangeRes.data;
+    if (!evolsUser || !evolsUser.email) {
+      throw new Error('Invalid exchange response from Evols backend');
+    }
+
+    // Find or create the LibreChat user by email
+    let user = await findUser({ email: evolsUser.email }, '_id email name username');
+    if (!user) {
+      user = await createUser(
+        {
+          email: evolsUser.email,
+          name: evolsUser.name || evolsUser.email,
+          username: evolsUser.email.split('@')[0],
+          emailVerified: true,
+          provider: 'openid',
+          openidId: String(evolsUser.id),
+        },
+        null,
+        true,
+        true,
+      );
+    }
+
+    await setAuthTokens(user._id, res);
+
+    const basePath = getBasePath();
+    const redirectTo = basePath ? `${basePath}/` : '/';
+    return res.redirect(redirectTo);
+  } catch (err) {
+    logger.error('[evols-ott] Exchange failed:', err.message);
+    const basePath = getBasePath();
+    const loginUrl = basePath ? `${basePath}/login?error=auth_failed` : '/login?error=auth_failed';
+    return res.redirect(loginUrl);
+  }
+});
+
 module.exports = router;
