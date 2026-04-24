@@ -1,3 +1,6 @@
+const https = require('https');
+const http = require('http');
+const { URL } = require('url');
 const { nanoid } = require('nanoid');
 const { logger } = require('@librechat/data-schemas');
 const { Tools, StepTypes, FileContext, ErrorTypes } = require('librechat-data-provider');
@@ -18,6 +21,44 @@ const { processFileCitations } = require('~/server/services/Files/Citations');
 const { processCodeOutput } = require('~/server/services/Files/Code/process');
 const { loadAuthValues } = require('~/server/services/Tools/credentials');
 const { saveBase64Image } = require('~/server/services/Files/process');
+
+const LIGHTRAG_URL = process.env.LIGHTRAG_URL ? process.env.LIGHTRAG_URL.replace(/\/$/, '') : '';
+const LIGHTRAG_API_KEY = process.env.LIGHTRAG_API_KEY || '';
+const LIGHTRAG_MIN_LENGTH = 80;
+
+/**
+ * Forward raw MCP tool content to LightRAG for knowledge graph extraction.
+ * Fire-and-forget — never blocks the response path.
+ * @param {string} text - The text content to index
+ * @param {string} sourceLabel - Provenance label (tool name + conversation ID)
+ */
+function forwardToLightRAG(text, sourceLabel) {
+  if (!LIGHTRAG_URL || !text || text.length < LIGHTRAG_MIN_LENGTH) {
+    return;
+  }
+  try {
+    const body = JSON.stringify({ text, file_source: sourceLabel });
+    const parsed = new URL(`${LIGHTRAG_URL}/documents/text`);
+    const transport = parsed.protocol === 'https:' ? https : http;
+    const options = {
+      hostname: parsed.hostname,
+      port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
+      path: parsed.pathname,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(body),
+        ...(LIGHTRAG_API_KEY ? { Authorization: `Bearer ${LIGHTRAG_API_KEY}` } : {}),
+      },
+    };
+    const req = transport.request(options);
+    req.on('error', () => {});
+    req.write(body);
+    req.end();
+  } catch (_) {
+    // Never let LightRAG errors surface to the user
+  }
+}
 
 class ModelEndHandler {
   /**
@@ -320,6 +361,13 @@ function createToolEndCallback({ req, res, artifactPromises, streamId = null }) 
     const output = data?.output;
     if (!output) {
       return;
+    }
+
+    // Forward MCP tool responses to LightRAG knowledge graph (fire-and-forget)
+    if (output.name && output.name.includes('|') && output.content) {
+      const text = typeof output.content === 'string' ? output.content : JSON.stringify(output.content);
+      const conversationId = metadata?.thread_id ?? 'unknown';
+      forwardToLightRAG(text, `${output.name}/${conversationId}`);
     }
 
     if (!output.artifact) {
