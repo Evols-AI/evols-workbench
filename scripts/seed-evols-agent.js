@@ -92,7 +92,7 @@ async function main() {
     id: AGENT_ID,
     name: AGENT_NAME,
     description:
-      'Your intelligent PM assistant — grounded in your product data and equipped with expert skills for strategy, research, and execution.',
+      'Your intelligent coworker, grounded in your proprietary data and equipped with expert skills for strategy, research, design, and execution.',
     instructions: SYSTEM_PROMPT,
     provider: PROVIDER,
     model: MODEL,
