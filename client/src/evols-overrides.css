@@ -47,42 +47,42 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --------------------------------------------------------------------------
-   4. Amethyst Haze palette primitives
+   4. Indigo Spectrum palette primitives
    -------------------------------------------------------------------------- */
 :root {
   /* Light surfaces */
-  --evols-l-bg:        #f8f7fa;   /* hsl(260 23% 97%) */
+  --evols-l-bg:        #f5f5ff;   /* hsl(240 100% 98%) */
   --evols-l-card:      #ffffff;
-  --evols-l-hover:     #ede9f5;   /* hsl(259 33% 93%) */
-  --evols-l-active:    #dfd9ec;   /* hsl(259 33% 89%) — secondary */
-  --evols-l-border:    #cec9d9;   /* hsl(259 17% 82%) */
-  --evols-l-input:     #eae7f0;   /* hsl(260 23% 92%) */
-  --evols-l-sidebar:   #f1eff5;   /* hsl(260 23% 95%) */
+  --evols-l-hover:     #e4dfff;   /* hsl(249 100% 94%) — secondary */
+  --evols-l-active:    #d5cffa;   /* slightly deeper */
+  --evols-l-border:    #e0e0f0;   /* hsl(240 35% 91%) */
+  --evols-l-input:     #f5f5ff;   /* same as bg */
+  --evols-l-sidebar:   #f0f0fa;   /* hsl(240 50% 96%) — muted */
 
   /* Dark surfaces */
-  --evols-d-bg:        #1a1823;   /* hsl(251 19% 12%) */
-  --evols-d-subtle:    #1e1c2b;   /* hsl(251 19% 14%) */
-  --evols-d-card:      #232030;   /* hsl(251 20% 16%) */
-  --evols-d-elevated:  #282537;   /* hsl(251 20% 18%) */
-  --evols-d-hover:     #2e2a3e;   /* hsl(251 20% 21%) */
-  --evols-d-active:    #342f45;   /* hsl(252 19% 23%) */
-  --evols-d-border:    #302c40;   /* hsl(252 19% 21%) */
-  --evols-d-input:     #2a273a;   /* hsl(250 20% 19%) */
-  --evols-d-sidebar:   #16141e;   /* hsl(252 20% 10%) */
+  --evols-d-bg:        #0f0f1a;   /* hsl(240 27% 8%) */
+  --evols-d-subtle:    #141424;   /* between bg and card */
+  --evols-d-card:      #1a1a2e;   /* hsl(240 28% 14%) */
+  --evols-d-elevated:  #1f1f37;   /* slightly lighter */
+  --evols-d-hover:     #23233e;
+  --evols-d-active:    #28264b;
+  --evols-d-border:    #303052;   /* hsl(240 26% 25%) */
+  --evols-d-input:     #0f0f1a;   /* same as bg */
+  --evols-d-sidebar:   #141424;   /* subtle */
 
-  /* Primary — muted amethyst */
-  --evols-primary:     #8a79ab;   /* hsl(260 23% 57%) — light */
-  --evols-primary-h:   #7a6899;   /* hover — slightly darker */
-  --evols-primary-d:   #a995c9;   /* hsl(263 33% 69%) — dark mode */
-  --evols-primary-d-h: #9884b8;   /* hover — dark mode */
+  /* Primary — indigo */
+  --evols-primary:     #6e56cf;   /* hsl(252 56% 57%) — light */
+  --evols-primary-h:   #5d47b8;   /* hover — slightly darker */
+  --evols-primary-d:   #a48fff;   /* hsl(251 100% 78%) — dark mode */
+  --evols-primary-d-h: #9480f0;   /* hover — dark mode */
 
-  /* Accent — rose/mauve */
-  --evols-accent:      #e6a5b8;   /* hsl(343 57% 78%) */
-  --evols-accent-d:    #f2b8c6;   /* hsl(346 69% 84%) — dark mode */
+  /* Accent — sky blue */
+  --evols-accent:      #d8e7ff;   /* hsl(218 100% 92%) — light */
+  --evols-accent-d:    #303060;   /* hsl(240 33% 28%) — dark mode */
 
   /* Destructive */
-  --evols-destructive:   #d95c5c;  /* hsl(0 62% 61%) */
-  --evols-destructive-d: #e57373;  /* hsl(0 69% 67%) — dark mode */
+  --evols-destructive:   #f24b6b;  /* hsl(350 100% 66%) */
+  --evols-destructive-d: #f24b6b;  /* same — bright enough on dark */
 }
 
 /* --------------------------------------------------------------------------
@@ -105,34 +105,34 @@ h1, h2, h3, h4, h5, h6 {
   --surface-hover:            var(--evols-l-hover);
   --surface-hover-alt:        var(--evols-l-active);
   --surface-active:           var(--evols-l-active);
-  --surface-active-alt:       #d3cce5;
+  --surface-active-alt:       #c8c2f5;
   --border-light:             var(--evols-l-border);
   --border-medium:            var(--evols-l-border);
-  --border-medium-alt:        #bfb9ce;
-  --border-heavy:             #ada5bf;
+  --border-medium-alt:        #cccce8;
+  --border-heavy:             #b8b8d8;
 
   /* Radix/shadcn tokens */
-  --background:               260 23% 97%;
-  --foreground:               243 14% 27%;
+  --background:               240 100% 98.04%;
+  --foreground:               240 27.57% 22.75%;
   --card:                     0 0% 100%;
-  --card-foreground:          243 14% 27%;
+  --card-foreground:          240 27.57% 22.75%;
   --popover:                  0 0% 100%;
-  --popover-foreground:       243 14% 27%;
-  --primary:                  260 23% 57%;
-  --primary-foreground:       260 23% 97%;
-  --secondary:                259 33% 89%;
-  --secondary-foreground:     243 14% 27%;
-  --muted:                    258 15% 87%;
-  --muted-foreground:         248 10% 46%;
-  --accent:                   343 57% 78%;
-  --accent-foreground:        344 24% 24%;
-  --destructive:              0 62% 61%;
-  --destructive-foreground:   260 23% 97%;
-  --border:                   259 17% 82%;
-  --input:                    260 23% 92%;
-  --ring:                     260 23% 57%;
+  --popover-foreground:       240 27.57% 22.75%;
+  --primary:                  252 55.75% 57.45%;
+  --primary-foreground:       0 0% 100%;
+  --secondary:                249 99.89% 93.72%;
+  --secondary-foreground:     249 33.33% 37.65%;
+  --muted:                    240 49.79% 96.07%;
+  --muted-foreground:         240 12.18% 48.24%;
+  --accent:                   218 99.96% 92.35%;
+  --accent-foreground:        240 27.57% 22.75%;
+  --destructive:              350 100% 66.47%;
+  --destructive-foreground:   0 0% 100%;
+  --border:                   240 34.71% 90.98%;
+  --input:                    240 100% 98.04%;
+  --ring:                     252 55.75% 57.45%;
   --radius:                   0.5rem;
-  --switch-unchecked:         258 15% 72%;
+  --switch-unchecked:         240 20% 75%;
 }
 
 body, html {
@@ -159,32 +159,32 @@ html.dark,
   --surface-hover:            var(--evols-d-hover);
   --surface-hover-alt:        var(--evols-d-active);
   --surface-active:           var(--evols-d-active);
-  --surface-active-alt:       #3d3752;
+  --surface-active-alt:       #2e2e55;
   --border-light:             var(--evols-d-border);
-  --border-medium:            #38334a;
-  --border-medium-alt:        #403b55;
-  --border-heavy:             #4e4866;
+  --border-medium:            #282848;
+  --border-medium-alt:        #303058;
+  --border-heavy:             #3a3a68;
 
-  --background:               251 19% 12%;
-  --foreground:               250 36% 90%;
-  --card:                     251 20% 16%;
-  --card-foreground:          250 36% 90%;
-  --popover:                  251 20% 16%;
-  --popover-foreground:       250 36% 90%;
-  --primary:                  263 33% 69%;
-  --primary-foreground:       251 19% 12%;
-  --secondary:                255 15% 38%;
-  --secondary-foreground:     250 36% 90%;
-  --muted:                    254 21% 16%;
-  --muted-foreground:         259 10% 64%;
-  --accent:                   272 16% 21%;
-  --accent-foreground:        346 69% 84%;
-  --destructive:              0 69% 67%;
-  --destructive-foreground:   250 36% 90%;
-  --border:                   252 19% 21%;
-  --input:                    250 20% 19%;
-  --ring:                     263 33% 69%;
-  --switch-unchecked:         254 15% 35%;
+  --background:               240 26.86% 8.04%;
+  --foreground:               240 48.81% 92.36%;
+  --card:                     240 27.77% 14.11%;
+  --card-foreground:          240 48.81% 92.36%;
+  --popover:                  240 27.77% 14.11%;
+  --popover-foreground:       240 48.81% 92.36%;
+  --primary:                  251 99.98% 78.04%;
+  --primary-foreground:       240 26.86% 8.04%;
+  --secondary:                243 32.81% 25.1%;
+  --secondary-foreground:     242 100% 88.04%;
+  --muted:                    240 33.35% 20%;
+  --muted-foreground:         240 20.23% 69.02%;
+  --accent:                   240 33.33% 28.23%;
+  --accent-foreground:        240 48.81% 92.36%;
+  --destructive:              350 100% 66.47%;
+  --destructive-foreground:   240 48.81% 92.36%;
+  --border:                   240 26.17% 25.49%;
+  --input:                    240 26.86% 8.04%;
+  --ring:                     251 99.98% 78.04%;
+  --switch-unchecked:         240 20% 35%;
 }
 
 html.dark body,

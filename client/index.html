@@ -30,14 +30,14 @@
       let backgroundColor;
 
       if (theme === 'dark') {
-        backgroundColor = '#1a1823';
+        backgroundColor = '#0f0f1a';
       } else if (theme === 'light') {
-        backgroundColor = '#f8f7fa';
+        backgroundColor = '#f5f5ff';
       } else if (theme === 'system') {
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        backgroundColor = prefersDarkScheme ? '#1a1823' : '#f8f7fa';
+        backgroundColor = prefersDarkScheme ? '#0f0f1a' : '#f5f5ff';
       } else {
-        backgroundColor = '#f8f7fa';
+        backgroundColor = '#f5f5ff';
       }
 
       loadingContainerStyle.innerHTML = `
