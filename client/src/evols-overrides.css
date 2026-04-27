@@ -29,45 +29,71 @@
   display: none !important;
 }
 
-
 /* --------------------------------------------------------------------------
-   5. Design token overrides — match Evols visual identity
-   Source of truth: evols/frontend/src/styles/globals.css
-   Two palettes mirrored here:
-     Light — off-white blue-gray (#f6f7fb base)
-     Dark  — navy (hsl 222 47% base)
+   3. Typography — Manrope (body) + Syne (headings)
    -------------------------------------------------------------------------- */
-
-/* ── Evols palette primitives (private to this file) ── */
-:root {
-  --evols-blue:        hsl(217, 91%, 60%);   /* primary accent */
-  --evols-blue-light:  hsl(217, 91%, 65%);
-  --evols-blue-dark:   hsl(217, 91%, 48%);
-
-  /* Light surfaces */
-  --evols-l-bg:        #f6f7fb;
-  --evols-l-card:      #ffffff;
-  --evols-l-hover:     #eef0f6;
-  --evols-l-active:    #e4e7f0;
-
-  /* Dark surfaces */
-  --evols-d-bg:        hsl(222, 47%, 8%);
-  --evols-d-subtle:    hsl(222, 47%, 11%);
-  --evols-d-card:      hsl(222, 47%, 14%);
-  --evols-d-elevated:  hsl(222, 40%, 17%);
-  --evols-d-hover:     hsl(222, 40%, 20%);
-  --evols-d-active:    hsl(222, 40%, 23%);
-  --evols-d-border:    hsl(222, 30%, 20%);
-}
-
-/* ── Light mode ── */
 :root {
   --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+}
 
+body, html, * {
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Syne', system-ui, sans-serif !important;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   4. Amethyst Haze palette primitives
+   -------------------------------------------------------------------------- */
+:root {
+  /* Light surfaces */
+  --evols-l-bg:        #f8f7fa;   /* hsl(260 23% 97%) */
+  --evols-l-card:      #ffffff;
+  --evols-l-hover:     #ede9f5;   /* hsl(259 33% 93%) */
+  --evols-l-active:    #dfd9ec;   /* hsl(259 33% 89%) — secondary */
+  --evols-l-border:    #cec9d9;   /* hsl(259 17% 82%) */
+  --evols-l-input:     #eae7f0;   /* hsl(260 23% 92%) */
+  --evols-l-sidebar:   #f1eff5;   /* hsl(260 23% 95%) */
+
+  /* Dark surfaces */
+  --evols-d-bg:        #1a1823;   /* hsl(251 19% 12%) */
+  --evols-d-subtle:    #1e1c2b;   /* hsl(251 19% 14%) */
+  --evols-d-card:      #232030;   /* hsl(251 20% 16%) */
+  --evols-d-elevated:  #282537;   /* hsl(251 20% 18%) */
+  --evols-d-hover:     #2e2a3e;   /* hsl(251 20% 21%) */
+  --evols-d-active:    #342f45;   /* hsl(252 19% 23%) */
+  --evols-d-border:    #302c40;   /* hsl(252 19% 21%) */
+  --evols-d-input:     #2a273a;   /* hsl(250 20% 19%) */
+  --evols-d-sidebar:   #16141e;   /* hsl(252 20% 10%) */
+
+  /* Primary — muted amethyst */
+  --evols-primary:     #8a79ab;   /* hsl(260 23% 57%) — light */
+  --evols-primary-h:   #7a6899;   /* hover — slightly darker */
+  --evols-primary-d:   #a995c9;   /* hsl(263 33% 69%) — dark mode */
+  --evols-primary-d-h: #9884b8;   /* hover — dark mode */
+
+  /* Accent — rose/mauve */
+  --evols-accent:      #e6a5b8;   /* hsl(343 57% 78%) */
+  --evols-accent-d:    #f2b8c6;   /* hsl(346 69% 84%) — dark mode */
+
+  /* Destructive */
+  --evols-destructive:   #d95c5c;  /* hsl(0 62% 61%) */
+  --evols-destructive-d: #e57373;  /* hsl(0 69% 67%) — dark mode */
+}
+
+/* --------------------------------------------------------------------------
+   5. Design token overrides — Light mode
+   -------------------------------------------------------------------------- */
+:root {
+  /* LibreChat surface tokens */
   --presentation:             var(--evols-l-bg);
-  --brand-purple:             var(--evols-blue);
-  --surface-submit:           var(--evols-blue);
-  --surface-submit-hover:     var(--evols-blue-dark);
+  --brand-purple:             var(--evols-primary);
+  --surface-submit:           var(--evols-primary);
+  --surface-submit-hover:     var(--evols-primary-h);
   --surface-primary:          var(--evols-l-card);
   --surface-primary-alt:      var(--evols-l-bg);
   --surface-primary-contrast: var(--evols-l-hover);
@@ -79,97 +105,97 @@
   --surface-hover:            var(--evols-l-hover);
   --surface-hover-alt:        var(--evols-l-active);
   --surface-active:           var(--evols-l-active);
-  --surface-active-alt:       #d8dcea;
+  --surface-active-alt:       #d3cce5;
+  --border-light:             var(--evols-l-border);
+  --border-medium:            var(--evols-l-border);
+  --border-medium-alt:        #bfb9ce;
+  --border-heavy:             #ada5bf;
 
-  /* Radix/shadcn primitives — match Evols light palette */
-  --background:               220 18% 98%;
-  --foreground:               220 20% 14%;
-  --primary:                  217 91% 60%;
-  --primary-foreground:       0 0% 100%;
-  --secondary:                220 14% 96%;
-  --secondary-foreground:     220 20% 14%;
-  --muted:                    220 14% 96%;
-  --muted-foreground:         220 9% 46%;
-  --accent:                   217 91% 60%;
-  --accent-foreground:        0 0% 100%;
-  --border:                   220 13% 91%;
-  --input:                    220 13% 91%;
-  --ring:                     217 91% 60%;
-  --switch-unchecked:         220 9% 70%;
+  /* Radix/shadcn tokens */
+  --background:               260 23% 97%;
+  --foreground:               243 14% 27%;
+  --card:                     0 0% 100%;
+  --card-foreground:          243 14% 27%;
+  --popover:                  0 0% 100%;
+  --popover-foreground:       243 14% 27%;
+  --primary:                  260 23% 57%;
+  --primary-foreground:       260 23% 97%;
+  --secondary:                259 33% 89%;
+  --secondary-foreground:     243 14% 27%;
+  --muted:                    258 15% 87%;
+  --muted-foreground:         248 10% 46%;
+  --accent:                   343 57% 78%;
+  --accent-foreground:        344 24% 24%;
+  --destructive:              0 62% 61%;
+  --destructive-foreground:   260 23% 97%;
+  --border:                   259 17% 82%;
+  --input:                    260 23% 92%;
+  --ring:                     260 23% 57%;
+  --radius:                   0.5rem;
+  --switch-unchecked:         258 15% 72%;
 }
 
-/* ── Page background: must use !important because style.css hard-codes
-      rgba() values directly on body/html (not via CSS variables) ── */
 body, html {
   background-color: var(--evols-l-bg) !important;
 }
 
-/* ── Dark mode ── */
-html.dark {
-  --brand-purple:             var(--evols-blue-light);
+/* --------------------------------------------------------------------------
+   6. Design token overrides — Dark mode
+   -------------------------------------------------------------------------- */
+html.dark,
+.dark {
+  --brand-purple:             var(--evols-primary-d);
   --presentation:             var(--evols-d-subtle);
-  --surface-submit:           var(--evols-blue);
-  --surface-submit-hover:     var(--evols-blue-dark);
+  --surface-submit:           var(--evols-primary-d);
+  --surface-submit-hover:     var(--evols-primary-d-h);
   --surface-primary:          var(--evols-d-bg);
   --surface-primary-alt:      var(--evols-d-subtle);
   --surface-primary-contrast: var(--evols-d-card);
   --surface-secondary:        var(--evols-d-subtle);
-  --surface-secondary-alt:    hsl(222, 40%, 16%);
+  --surface-secondary-alt:    var(--evols-d-elevated);
   --surface-tertiary:         var(--evols-d-elevated);
-  --surface-dialog:           hsl(222, 47%, 13%);
-  --surface-chat:             hsl(222, 47%, 13%);
+  --surface-dialog:           var(--evols-d-card);
+  --surface-chat:             var(--evols-d-card);
   --surface-hover:            var(--evols-d-hover);
-  --surface-hover-alt:        hsl(222, 40%, 22%);
+  --surface-hover-alt:        var(--evols-d-active);
   --surface-active:           var(--evols-d-active);
-  --surface-active-alt:       hsl(222, 40%, 26%);
+  --surface-active-alt:       #3d3752;
   --border-light:             var(--evols-d-border);
-  --border-medium:            hsl(222, 30%, 23%);
-  --border-medium-alt:        hsl(222, 30%, 26%);
-  --border-heavy:             hsl(222, 30%, 32%);
+  --border-medium:            #38334a;
+  --border-medium-alt:        #403b55;
+  --border-heavy:             #4e4866;
 
-  /* Radix/shadcn primitives — match Evols dark palette */
-  --background:               222 47% 11%;
-  --foreground:               210 40% 98%;
-  --primary:                  217 91% 60%;
-  --primary-foreground:       0 0% 100%;
-  --secondary:                217 32% 17%;
-  --secondary-foreground:     210 40% 98%;
-  --muted:                    217 32% 17%;
-  --muted-foreground:         215 20% 65%;
-  --accent:                   217 91% 60%;
-  --accent-foreground:        0 0% 100%;
-  --border:                   222 30% 20%;
-  --input:                    222 30% 20%;
-  --ring:                     217 91% 60%;
-  --switch-unchecked:         222 20% 35%;
+  --background:               251 19% 12%;
+  --foreground:               250 36% 90%;
+  --card:                     251 20% 16%;
+  --card-foreground:          250 36% 90%;
+  --popover:                  251 20% 16%;
+  --popover-foreground:       250 36% 90%;
+  --primary:                  263 33% 69%;
+  --primary-foreground:       251 19% 12%;
+  --secondary:                255 15% 38%;
+  --secondary-foreground:     250 36% 90%;
+  --muted:                    254 21% 16%;
+  --muted-foreground:         259 10% 64%;
+  --accent:                   272 16% 21%;
+  --accent-foreground:        346 69% 84%;
+  --destructive:              0 69% 67%;
+  --destructive-foreground:   250 36% 90%;
+  --border:                   252 19% 21%;
+  --input:                    250 20% 19%;
+  --ring:                     263 33% 69%;
+  --switch-unchecked:         254 15% 35%;
 }
 
 html.dark body,
 html.dark,
-.dark body,
-.dark html {
+.dark body {
   background-color: var(--evols-d-bg) !important;
 }
 
-/* Extend dark primitive overrides to .dark class (LibreChat applies it to <html>) */
-.dark {
-  --background:               222 47% 11%;
-  --foreground:               210 40% 98%;
-  --primary:                  217 91% 60%;
-  --primary-foreground:       0 0% 100%;
-  --secondary:                217 32% 17%;
-  --secondary-foreground:     210 40% 98%;
-  --muted:                    217 32% 17%;
-  --muted-foreground:         215 20% 65%;
-  --accent:                   217 91% 60%;
-  --accent-foreground:        0 0% 100%;
-  --border:                   222 30% 20%;
-  --input:                    222 30% 20%;
-  --ring:                     217 91% 60%;
-  --switch-unchecked:         222 20% 35%;
-}
-
-/* ── Settings panel route (embedded iframe): match Evols card background ── */
+/* --------------------------------------------------------------------------
+   7. Settings panel route (embedded iframe): match card background
+   -------------------------------------------------------------------------- */
 html.evols-panel body,
 html.evols-panel {
   background-color: var(--evols-l-card) !important;
@@ -181,7 +207,7 @@ html.dark.evols-panel {
 }
 
 /* --------------------------------------------------------------------------
-   6. Rotating placeholder slide-up animation
+   8. Rotating placeholder slide-up animation
    -------------------------------------------------------------------------- */
 @keyframes evols-placeholder-in {
   from { opacity: 0; transform: translateY(8px); }
@@ -194,7 +220,7 @@ html.dark.evols-panel {
 }
 
 /* --------------------------------------------------------------------------
-   7. Hide LLM API key entry in settings — BYOK is managed in Evols Settings
+   9. Hide LLM API key entry in settings — BYOK is managed in Evols Settings
    -------------------------------------------------------------------------- */
 [data-testid='api-key-section'],
 [class*='api-key'],

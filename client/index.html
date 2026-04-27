@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
       html,
       body {
@@ -30,14 +30,14 @@
       let backgroundColor;
 
       if (theme === 'dark') {
-        backgroundColor = 'hsl(222, 47%, 8%)';
+        backgroundColor = '#1a1823';
       } else if (theme === 'light') {
-        backgroundColor = '#f6f7fb';
+        backgroundColor = '#f8f7fa';
       } else if (theme === 'system') {
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        backgroundColor = prefersDarkScheme ? 'hsl(222, 47%, 8%)' : '#f6f7fb';
+        backgroundColor = prefersDarkScheme ? '#1a1823' : '#f8f7fa';
       } else {
-        backgroundColor = '#f6f7fb';
+        backgroundColor = '#f8f7fa';
       }
 
       loadingContainerStyle.innerHTML = `
