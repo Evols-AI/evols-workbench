@@ -37,7 +37,7 @@ RUN \
     npm config set fetch-retry-maxtimeout 600000 ; \
     npm config set fetch-retries 5 ; \
     npm config set fetch-retry-mintimeout 15000 ; \
-    npm ci --no-audit
+    npm ci
 
 COPY --chown=node:node . .
 
@@ -50,7 +50,8 @@ RUN \
 # Node API setup
 EXPOSE 3080
 ENV HOST=0.0.0.0
-CMD ["npm", "run", "backend"]
+# Entrypoint substitutes ${EVOLS_BACKEND_URL} in librechat.yaml at startup
+ENTRYPOINT ["/bin/sh", "/app/docker-entrypoint.sh"]
 
 # Optional: for client with nginx routing
 # FROM nginx:stable-alpine AS nginx-client

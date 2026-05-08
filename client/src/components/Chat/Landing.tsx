@@ -160,7 +160,7 @@ export default function Landing({ centerFormOnLanding }: { centerFormOnLanding: 
             <Sparkles className="size-8 text-brand-purple" aria-hidden="true" />
           </div>
           {((isAgent || isAssistant) && name) || name ? (
-            <div className="flex flex-col items-center gap-0 p-2">
+            <div className={`flex flex-col items-center gap-0 p-2${conversation?.agent_id === 'agent_evols_ai' ? ' evols-agent-title' : ''}`}>
               <SplitText
                 key={`split-text-${name}`}
                 text={name}
@@ -202,7 +202,7 @@ export default function Landing({ centerFormOnLanding }: { centerFormOnLanding: 
             className="animate-fadeIn mt-4 flex items-center gap-2 rounded-full border border-border px-5 py-2 text-sm text-text-secondary transition-colors hover:bg-surface-hover"
           >
             <Sparkles className="size-4" />
-            Setup PM OS
+            Setup your OS
           </button>
         )}
       </div>
