@@ -72,7 +72,11 @@ function createOAuthHandler(redirectUri = domains.client) {
       } else {
         await setAuthTokens(req.user._id, res);
       }
-      res.redirect(redirectUri);
+      const postAuthRedirect =
+        req.user?.provider === 'openid' && process.env.OPENID_POST_AUTH_REDIRECT
+          ? process.env.OPENID_POST_AUTH_REDIRECT
+          : redirectUri;
+      res.redirect(postAuthRedirect);
     } catch (err) {
       logger.error('Error in setting authentication tokens:', err);
       next(err);

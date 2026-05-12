@@ -11,6 +11,7 @@ const SocialButton = ({ id, enabled, serverDomain, oauthPath, Icon, label }) => 
         aria-label={`${label}`}
         className="flex w-full items-center space-x-3 rounded-2xl border border-border-light bg-surface-primary px-5 py-3 text-text-primary transition-colors duration-200 hover:bg-surface-tertiary"
         href={`${serverDomain}/oauth/${oauthPath}`}
+        target="_top"
         data-testid={id}
       >
         <Icon />

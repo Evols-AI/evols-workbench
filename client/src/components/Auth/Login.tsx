@@ -67,7 +67,9 @@ function Login() {
   useEffect(() => {
     if (shouldAutoRedirect) {
       console.log('Auto-redirecting to OpenID provider...');
-      window.location.href = `${startupConfig.serverDomain}/oauth/openid`;
+      window.top
+        ? (window.top.location.href = `${startupConfig.serverDomain}/oauth/openid`)
+        : (window.location.href = `${startupConfig.serverDomain}/oauth/openid`);
     }
   }, [shouldAutoRedirect, startupConfig]);
 

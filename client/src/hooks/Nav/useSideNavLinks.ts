@@ -131,8 +131,9 @@ export default function useSideNavLinks({
     }
 
     if (
-      (hasAccessToUseMCPSettings && availableMCPServers && availableMCPServers.length > 0) ||
-      hasAccessToCreateMCP
+      false &&
+      ((hasAccessToUseMCPSettings && availableMCPServers && availableMCPServers.length > 0) ||
+        hasAccessToCreateMCP)
     ) {
       links.push({
         title: 'com_nav_setting_mcp',
