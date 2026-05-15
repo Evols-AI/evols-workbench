@@ -85,8 +85,8 @@ async function main() {
 
   const now = new Date();
 
-  const PROVIDER = process.env.EVOLS_AGENT_PROVIDER || 'Bedrock (AWS)';
-  const MODEL = process.env.EVOLS_AGENT_MODEL || 'us.anthropic.claude-sonnet-4-6';
+  const PROVIDER = process.env.EVOLS_AGENT_PROVIDER || 'Evols Auto';
+  const MODEL = process.env.EVOLS_AGENT_MODEL || 'auto';
 
   const doc = {
     id: AGENT_ID,

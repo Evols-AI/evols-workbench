@@ -28,7 +28,7 @@ function getTextSizeClass(text: string | undefined | null) {
   return 'text-lg sm:text-md';
 }
 
-const SETUP_PM_OS_PROMPT = "@Evols AI Let's set up my PM OS. I want to configure my role, team, and projects.";
+const SETUP_PM_OS_PROMPT = "@Evols AI Let's set up my OS. I want to configure my role, team, and projects.";
 
 export default function Landing({ centerFormOnLanding }: { centerFormOnLanding: boolean }) {
   const { conversation } = useChatContext();
